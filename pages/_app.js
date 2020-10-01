@@ -8,18 +8,18 @@ import { Footer } from 'components/footer';
 import { CustomContainer } from 'components/custom-bootstrap';
 
 const MyApp = ({ Component, pageProps }) => (
-	<>
-		<Navigation />
-		<CustomContainer height="100vh">
-			<Component {...pageProps} />
-		</CustomContainer>
-		<Footer />
-	</>
+  <>
+    <Navigation />
+    <CustomContainer height="100vh">
+      <Component {...pageProps} />
+    </CustomContainer>
+    <Footer />
+  </>
 );
 
 MyApp.getInitialProps = async (context) => {
-	const initialProps = App.getInitialProps && (await App.getInitialProps(context));
-	return { pageProps: { ...initialProps.pageProps } };
+  const initialProps = App.getInitialProps && (await App.getInitialProps(context));
+  return { pageProps: { ...initialProps.pageProps } };
 };
 
 export default MyApp;
