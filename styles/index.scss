@@ -1,0 +1,39 @@
+@import url(https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300;700&family=Open+Sans:wght@300;700&display=swap);
+
+$white: #fff !default;
+$gray-10: #f8f9fa !default;
+$gray-20: #e9ecef !default;
+$gray-30: #dee2e6 !default;
+$gray-40: #ced4da !default;
+$gray-50: #adb5bd !default;
+$gray-60: #868e96 !default;
+$gray-70: #495057 !default;
+$gray-80: #343a40 !default;
+$gray-90: #212529 !default;
+  
+$black: #000 !default;
+$black-navigation: #141618;
+
+$blue:    #007bff !default;
+$indigo:  #6610f2 !default;
+$purple:  #6f42c1 !default;
+$pink:    #e83e8c !default;
+$red:     #dc3545 !default;
+$orange:  #fd7e14 !default;
+$yellow:  #ffc107 !default;
+$green:   #28a745 !default;
+$teal:    #0085A1 !default;
+$cyan:    #17a2b8 !default;
+
+body {
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Open Sans Condensed', sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: $gray-10;
+}
+
+html {
+  height: 100%;
+}
