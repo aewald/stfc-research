@@ -6,8 +6,13 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+require('./database').connect();
+
 app.prepare().then(() => {
   const server = express();
+
+  const apolloServer = require('./graphql').createApolloServer();
+  apolloServer.applyMiddleware({ app: server });
 
   server.all('*', (req, res) => {
     return handle(req, res);
