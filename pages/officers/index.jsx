@@ -19,6 +19,8 @@ const Officers = () => {
       <div>
         {officers.map(({ _id, name, rarity }) => (
           <div>
+            <img src={`/images/officer_${name.replace(/[ ]/g, '_').replace(/[.']/g, '')}.png`} width="50" height="50" />
+            &nbsp;
             <Link key={_id} href="/officers/[id]" as={`/officers/${_id}`}>
               <a style={{ color: colors[`${rarity.toLowerCase()}`] }}>{name}</a>
             </Link>
