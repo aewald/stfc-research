@@ -10,6 +10,7 @@ exports.createApolloServer = () => {
     ${officersTypes}
     type Query {
       officers: [Officers]
+      officer(id: ID): Officers
     }
   `;
 

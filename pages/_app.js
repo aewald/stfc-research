@@ -5,14 +5,14 @@ import 'styles/index.scss';
 
 import { Navigation } from 'components/navigation';
 import { Footer } from 'components/footer';
-import { CustomContainer } from 'components/custom-bootstrap';
+import { Container } from 'react-bootstrap';
 
 const MyApp = ({ Component, pageProps }) => (
   <>
     <Navigation />
-    <CustomContainer height="100vh">
+    <Container>
       <Component {...pageProps} />
-    </CustomContainer>
+    </Container>
     <Footer />
   </>
 );
