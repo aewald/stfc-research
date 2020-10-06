@@ -13,6 +13,11 @@ const rankObject = new Schema({
     type: { type: String, enum: ['Command', 'Engineering', 'Science', ''] },
     cost: Number,
   },
+  attack: [Number],
+  defense: [Number],
+  health: [Number],
+  strength: [Number],
+  exp: [Number],
 });
 
 const officersSchema = new Schema({

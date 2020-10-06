@@ -39,6 +39,11 @@ const ranks = `
     credits: OfficerCredits
     experience: Int!
     badges: OfficerBadges
+    attack: [Int!]!
+    defense: [Int!]!
+    health: [Int!]!
+    strength: [Int!]!
+    exp: [Int!]!
   }
 
   type OfficerCredits{

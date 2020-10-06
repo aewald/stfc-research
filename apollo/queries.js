@@ -50,6 +50,11 @@ export const GET_OFFICER = gql`
             type
             cost
           }
+          attack
+          defense
+          health
+          strength
+          exp
         }
         rank2 {
           maxLevel
@@ -63,6 +68,11 @@ export const GET_OFFICER = gql`
             type
             cost
           }
+          attack
+          defense
+          health
+          strength
+          exp
         }
         rank3 {
           maxLevel
@@ -76,6 +86,11 @@ export const GET_OFFICER = gql`
             type
             cost
           }
+          attack
+          defense
+          health
+          strength
+          exp
         }
         rank4 {
           maxLevel
@@ -89,6 +104,11 @@ export const GET_OFFICER = gql`
             type
             cost
           }
+          attack
+          defense
+          health
+          strength
+          exp
         }
         rank5 {
           maxLevel
@@ -102,6 +122,11 @@ export const GET_OFFICER = gql`
             type
             cost
           }
+          attack
+          defense
+          health
+          strength
+          exp
         }
       }
     }
