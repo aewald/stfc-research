@@ -29,33 +29,48 @@ const OfficerDetailsTemplate = (officer) => {
     advTraining: false,
     atkTraining: false,
     defTraining: false
-  });
+  });  
+
+  const abilityBuff = officer.abilities.officer.description.match(/Attack|Defense|Health/);
+
+  const statName = abilityBuff[0].toLowerCase();
+  const [abilityValue, setAbilityValue] = useState({
+    attack: 0,
+    defense: 0,
+    health: 0,
+    [statName]: officer.abilities.officer.rank[tierLevel.tier]
+  })
+
 
   useEffect(() => {
     calculateStats();
   }, [tierLevel, research, academyLevel, advTrainingLevel, atkTrainingLevel, defTrainingLevel]);
 
   const calculateStrength = (atk, def, hp, currentTier) => {
-    console.log('research', research);
-    const str = (atk + def + hp) * (currentTier + 1);
-    console.log('str', str);
+    const str = (+atk + +def + +hp) * (currentTier + 1);
     return str;
   };
 
   const calculateStats = () => {
+    if (statName) {
+      setAbilityValue({[statName]: officer.abilities.officer.rank[tierLevel.tier-1]})
+    }
     const academyValue = research.academy ? academyValues[academyLevel] / 100 : 0;
     const primeValue = research.prime ? 100 / 100 : 0;
     const advTrainingValue = research.advTraining ? advTrainingValues[advTrainingLevel] / 100 : 0;
     const atkTrainingValue = research.atkTraining ? atkTrainingValues[atkTrainingLevel] / 100 : 0;
     const defTrainingValue = research.defTraining ? defTrainingValues[defTrainingLevel] / 100 : 0;
+    const officerAbilityValue = abilityValue.attack / 100;
 
     const baseAtk = officer.ranks[`rank${tierLevel.tier}`].attack[`${tierLevel.index}`];
     const baseDef = officer.ranks[`rank${tierLevel.tier}`].defense[`${tierLevel.index}`];
     const baseHp = officer.ranks[`rank${tierLevel.tier}`].health[`${tierLevel.index}`];
-
-    const atk = baseAtk + baseAtk * academyValue + baseAtk * primeValue + baseAtk * advTrainingValue + baseAtk * atkTrainingValue;
-    const def = baseDef + baseDef * academyValue + baseDef * primeValue + baseDef * advTrainingValue + baseDef * defTrainingValue;
-    const hp = baseHp + baseHp * academyValue + baseHp * primeValue + baseHp * advTrainingValue;
+    
+    const atk =
+      (baseAtk + baseAtk * academyValue + baseAtk * primeValue + baseAtk * advTrainingValue + baseAtk * atkTrainingValue + baseAtk * officerAbilityValue).toFixed(0);
+    const def =
+      (baseDef + baseDef * academyValue + baseDef * primeValue + baseDef * advTrainingValue + baseDef * defTrainingValue).toFixed(0);
+    const hp = (baseHp + baseHp * academyValue + baseHp * primeValue + baseHp * advTrainingValue).toFixed(0);
     const str = calculateStrength(atk, def, hp, tierLevel.currentTier);
 
     setCalculatedStats({
@@ -66,8 +81,9 @@ const OfficerDetailsTemplate = (officer) => {
     });
   };
 
-  const updateLevelHandler = (level) => {
+  const updateLevelHandler = (level, currentTier) => {
     const tierLvl = { ...tierLevel };
+    tierLvl.currentTier = currentTier || tierLvl.currentTier;
     if (level <= 5) {
       tierLvl.tier = 1;
       (tierLvl.level = +level), (tierLvl.index = level - 1);
@@ -102,14 +118,18 @@ const OfficerDetailsTemplate = (officer) => {
   };
 
   const useResearchHandler = (value) => {
-    console.log(value);
     setResearch({ ...research, [value]: !research[value] });
   };
 
   const updateCurrentTierHandler = (tier) => {
-    const tierLvl = { ...tierLevel };
-    tierLvl.currentTier = +tier;
-    setTierLevel((prevState) => ({ ...prevState, ...tierLvl }));
+    const currentTier = +tier;
+    let level = tierLevel.level;
+    if (level > officer.ranks[`rank${tier}`].maxLevel) {
+      level = officer.ranks[`rank${tier}`].maxLevel;
+      return updateLevelHandler(level, currentTier);
+    }
+
+    return setTierLevel((prevState) => ({ ...prevState, currentTier }));
   };
 
   return (
@@ -142,24 +162,32 @@ const OfficerDetailsTemplate = (officer) => {
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <span>Attack</span>
-            <span>{calculatedStats.attack.toFixed(0)}</span>
+            <span>{calculatedStats.attack}</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <span>Defense</span>
-            <span>{calculatedStats.defense.toFixed(0)}</span>
+            <span>{calculatedStats.defense}</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <span>Health</span>
-            <span>{calculatedStats.health.toFixed(0)}</span>
+            <span>{calculatedStats.health}</span>
           </div>
         </div>
-        <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #fff', padding: '10px 0' }}>
+          <span>Captain Maneuver</span>
           <span>{officer.abilities.captain.name}</span>
         </div>
-        <div>
+        <div style={{padding: '0 0 10px'}}>
+          <span>{officer.abilities.captain.description.replace('+', officer.abilities.captain.value)}</span>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #fff', padding: '10px 0' }}>
+          <span>Officer Ability</span>
           <span>{officer.abilities.officer.name}</span>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'left' }}>
+        <div style={{padding: '0 0 10px'}}>
+          <span>{officer.abilities.officer.description.replace('+', officer.abilities.officer.rank[tierLevel.currentTier - 1])}</span>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'left', borderTop: '1px solid #fff', padding: '10px 0 0' }}>
           <span>Tier&nbsp;</span>
           <span> {tierLevel.currentTier}</span>
           <span style={{ marginLeft: 'auto' }}>
@@ -174,13 +202,13 @@ const OfficerDetailsTemplate = (officer) => {
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <span>Level</span>
-          <span>{tierLevel.level}/30</span>
+          <span>{tierLevel.level}/{officer.ranks[`rank${tierLevel.currentTier}`].maxLevel}</span>
         </div>
         <div>
           <Form.Control
             type="range"
             min="1"
-            max="30"
+            max={officer.ranks[`rank${tierLevel.currentTier}`].maxLevel}
             value={tierLevel.level}
             onChange={() => updateLevelHandler(event.target.value)}
           />
@@ -280,4 +308,35 @@ str 312
 atk 16
 def 10
 hea 52
+
+
+cadet sulu
+lvl 30 t5
+str 2460 (2322) ?
+atk 216 (194) ? 150*15%=22.5 (150*29%=43.5) 22.5+43.5+150 = 216
+def 97
+hea 97
+
+cadet mccoy
+lvl 20 t4
+str 1180 (1135) ?
+atk 57
+def 57
+health 122 (114) ? (114/122=93% or 7%) (8)
+
+JoBi's 
+cadet sulu
+lvl 30 t5
+str 4560 (4428)
+atk 393 (371) (22) 150*15%=22.5 (150*39%=58.5) (150*4%=6)x2 22.5+58.5+6+6+150+150 = 231
+def 185
+health 182
+
+cadet mccoy
+lvl 30 t5
+str 4404 (4410)
+atk 185
+def 185
+health 364 (365)
+
 */
