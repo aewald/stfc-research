@@ -65,12 +65,25 @@ const OfficerDetailsTemplate = (officer) => {
     const baseAtk = officer.ranks[`rank${tierLevel.tier}`].attack[`${tierLevel.index}`];
     const baseDef = officer.ranks[`rank${tierLevel.tier}`].defense[`${tierLevel.index}`];
     const baseHp = officer.ranks[`rank${tierLevel.tier}`].health[`${tierLevel.index}`];
-    
+
     const atk =
-      (baseAtk + baseAtk * academyValue + baseAtk * primeValue + baseAtk * advTrainingValue + baseAtk * atkTrainingValue + baseAtk * officerAbilityValue).toFixed(0);
+      baseAtk +
+      Math.floor(baseAtk * academyValue) +
+      Math.floor(baseAtk * primeValue) +
+      Math.floor(baseAtk * advTrainingValue) +
+      Math.floor(baseAtk * atkTrainingValue) +
+      Math.floor(baseAtk * officerAbilityValue);
     const def =
-      (baseDef + baseDef * academyValue + baseDef * primeValue + baseDef * advTrainingValue + baseDef * defTrainingValue).toFixed(0);
-    const hp = (baseHp + baseHp * academyValue + baseHp * primeValue + baseHp * advTrainingValue).toFixed(0);
+      baseDef +
+      Math.floor(baseDef * academyValue) +
+      Math.floor(baseDef * primeValue) +
+      Math.floor(baseDef * advTrainingValue) +
+      Math.floor(baseDef * defTrainingValue);
+    const hp =
+      baseHp +
+      Math.floor(baseHp * academyValue) +
+      Math.floor(baseHp * primeValue) +
+      Math.floor(baseHp * advTrainingValue);
     const str = calculateStrength(atk, def, hp, tierLevel.currentTier);
 
     setCalculatedStats({
