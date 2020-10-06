@@ -33,7 +33,7 @@ const OfficerDetailsTemplate = (officer) => {
 
   const abilityBuff = officer.abilities.officer.description.match(/Attack|Defense|Health/);
 
-  const statName = abilityBuff[0].toLowerCase();
+  const statName = abilityBuff ? abilityBuff[0].toLowerCase() : 'nobuffs';
   const [abilityValue, setAbilityValue] = useState({
     attack: 0,
     defense: 0,
@@ -52,8 +52,8 @@ const OfficerDetailsTemplate = (officer) => {
   };
 
   const calculateStats = () => {
-    if (statName) {
-      setAbilityValue({[statName]: officer.abilities.officer.rank[tierLevel.tier-1]})
+    if (statName !== 'nobuff') {
+      setAbilityValue({ ...abilityValue, [statName]: officer.abilities.officer.rank[tierLevel.tier - 1] });
     }
     const academyValue = research.academy ? academyValues[academyLevel] / 100 : 0;
     const primeValue = research.prime ? 100 / 100 : 0;
