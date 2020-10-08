@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Form } from 'react-bootstrap';
 
+import OfficerStrength from './officer-strength.component';
+import OfficerStats from './officer-stats.component';
+
 const colors = { epic: '#c040ff', rare: '#0090c8', uncommon: '#00a030', common: '#ffffff' };
 
 // this will be refactored and into db soon
@@ -149,9 +152,9 @@ const OfficerDetailsTemplate = (officer) => {
 
   return (
     <>
-      <h1>
+      <h4>
         <Link href="/officers">&#10094;</Link> Officer Detail
-      </h1>
+      </h4>
       <div style={{ width: '350px' }}>
         <h2 style={{ color: colors[`${officer.rarity.toLowerCase()}`], display: 'flex', justifyContent: 'left' }}>
           <span>
@@ -172,22 +175,13 @@ const OfficerDetailsTemplate = (officer) => {
           <span>
             <img src={`/images/${officer.class}.png`} alt={officer.class} width='50' height='50' style={{borderRadius: '10px'}} />
           </span>
-          <span style={{paddingLeft: '10px', lineHeight: '20px'}}><span style={{display: 'block'}}><small>STRENGTH</small></span><span style={{display: 'block', fontWeight: '700', fontSize: '30px'}}>{calculatedStats.strength.toFixed(0)}</span></span>
+          <OfficerStrength strengthValue={calculatedStats.strength} />
         </div>
-        <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>Attack</span>
-            <span>{calculatedStats.attack}</span>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>Defense</span>
-            <span>{calculatedStats.defense}</span>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>Health</span>
-            <span>{calculatedStats.health}</span>
-          </div>
-        </div>
+      
+        <OfficerStats type='Attack' value={calculatedStats.attack} />
+        <OfficerStats type='Defense' value={calculatedStats.defense} />
+        <OfficerStats type='Health' value={calculatedStats.health} />
+        
         <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #fff', padding: '10px 0' }}>
           <span>Captain Maneuver</span>
           <span>{officer.abilities.captain.name}</span>
