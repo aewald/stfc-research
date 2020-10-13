@@ -14,9 +14,9 @@
   "author": "Andy Ewald",
   "license": "ISC",
   "dependencies": {
-    "@ae-auth": "aewald/ae-auth#cb7e17740bd57039bd0b581b5d880860967d9b69",
     "@apollo/react-hooks": "^4.0.0",
     "@apollo/react-ssr": "^4.0.0",
+    "ae-auth": "aewald/ae-auth#cb7e17740bd57039bd0b581b5d880860967d9b69",
     "apollo-boost": "^0.4.9",
     "apollo-server-express": "^2.18.2",
     "bootstrap": "^4.5.2",

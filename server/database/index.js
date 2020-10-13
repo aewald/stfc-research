@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { userSchema } = require('@ae-auth');
+const { userSchema } = require('ae-auth');
 mongoose.model('User', userSchema);
 
 require('./models/officers');

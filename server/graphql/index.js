@@ -4,7 +4,7 @@ const { ApolloServer, gql } = require('apollo-server-express');
 const { officersQueries } = require('./resolvers');
 const { officersTypes } = require('./types');
 const Officers = require('./models/Officers');
-const { userMutation, userTypes, userTypeDefs, User } = require('@ae-auth');
+const { userMutation, userTypes, userTypeDefs, User } = require('ae-auth');
 
 exports.createApolloServer = () => {
   const typeDefs = gql`
