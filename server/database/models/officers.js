@@ -56,4 +56,4 @@ const officersSchema = new Schema({
   createdDate: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('officers', officersSchema);
+module.exports = mongoose.model('Officers', officersSchema);
