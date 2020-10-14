@@ -68,7 +68,7 @@ const officersFields = `
   ranks: OfficerRanks
 `;
 
-exports.officersTypes = `
+export const officersTypes = `
 ${abilities}
 ${ranks}
 type Officers {

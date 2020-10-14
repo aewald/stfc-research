@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
-const { ApolloServer, gql } = require('apollo-server-express');
+import mongoose from 'mongoose';
+import { ApolloServer, gql } from 'apollo-server-express';
 
-const { officersQueries } = require('./resolvers');
-const { officersTypes } = require('./types');
-const Officers = require('./models/Officers');
-const { buildAuthContext, userMutation, userTypes, userTypeDefs, User } = require('ae-auth');
+import { officersQueries } from './resolvers';
+import { officersTypes } from './types';
+import { Officers } from './models/Officers';
+import { buildAuthContext, userMutation, userTypes, userTypeDefs, User } from 'ae-auth';
 
-exports.createApolloServer = () => {
+export const createApolloServer = () => {
   const typeDefs = gql`
     ${officersTypes}
     ${userTypes}

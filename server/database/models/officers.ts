@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import { Schema, model } from 'mongoose';
 
 const rankObject = new Schema({
   maxLevel: { type: Number, required: true },
@@ -56,4 +55,4 @@ const officersSchema = new Schema({
   createdDate: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('Officers', officersSchema);
+export default model('Officers', officersSchema);
